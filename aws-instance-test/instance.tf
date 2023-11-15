@@ -3,7 +3,7 @@ resource "aws_instance" "example" {
     #ami = lookup(var.AMIS, var.AWS_REGION, "")
     ami = data.aws_ami.amzn2-linux-ami.image_id
 
-    instance_type = "t2.small"
+    instance_type = "t2.micro"
     tags =  {
         Name = "LMY"
         Service = var.test
