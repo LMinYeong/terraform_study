@@ -2,7 +2,7 @@ variable "AWS_REGION" {
     default = "ap-southeast-1"
 }
 variable "test" {
-  type = "string"
+  type = string
   description = "cloud에서 설정해씁니다."
 }
 
