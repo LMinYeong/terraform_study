@@ -11,7 +11,7 @@ resource "aws_instance" "example" {
 
     connection {
         type     = "ssh"
-        user     = "root"
+        user     = "ec2-user"
         password = var.root_password
         host     = self.public_ip
     }
