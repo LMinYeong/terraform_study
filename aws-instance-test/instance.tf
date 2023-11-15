@@ -9,4 +9,17 @@ resource "aws_instance" "example" {
         Service = var.test
     }
 
+    connection {
+        type     = "ssh"
+        user     = "root"
+        password = var.root_password
+        host     = self.public_ip
+    }
+
+    provisioner "remote-exec" {
+        inline = [
+            "echo ${self.private_ip} >> private_ips.txt"
+        ]
+    }
+    
 }
