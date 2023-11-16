@@ -3,12 +3,12 @@ variable "AWS_REGION" {
 }
 
 #[!]Region별 ami id 다름
-#variable "AMIS" {
-#    type = map(string)
-#    default = {
-#        ap-southeast-1 = "ami-09964535fc01efa5f"
-#    }
-#}
+variable "AMIS" {
+    type = map(string)
+    default = {
+        ap-southeast-1 = "ami-0ebcd68de1afe59cd"
+    }
+}
 
 variable "test" {
   type = string
