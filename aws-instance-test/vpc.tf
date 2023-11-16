@@ -52,13 +52,17 @@ resource "aws_route_table" "lmy-tf-public" {
   }
 
   tags = {
-    Name = "lmy-tf-public-1"
+    Name = "lmy-tf-public-rt"
   }
 
 }
 
 resource "aws_route_table" "lmy-tf-private" {
   vpc_id = aws_vpc.lmy-terraform-test.id
+
+  tags = {
+    Name = "lmy-tf-private-rt"
+  }
 }
 
 # (5) Route associations public
