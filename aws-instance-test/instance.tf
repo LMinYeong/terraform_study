@@ -9,13 +9,6 @@ resource "aws_instance" "example" {
         Service = var.test
     }
 
-    provisioner "local-exec" {
-        command = "echo ${self.private_ip} >> private_ips.txt"
-    }
-
-    provisioner "file" {
-      source = "private_ips.txt"
-      destination = "/home/ec2-user/private_ips.txt"
-    }
+    security_groups = [ aws_security_group.aws_security_group.from_singapore.id ]
 
 }
