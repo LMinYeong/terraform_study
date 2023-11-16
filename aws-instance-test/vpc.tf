@@ -23,7 +23,7 @@ resource "aws_subnet" "lmy-tf-public-1" {
 
 resource "aws_subnet" "lmy-tf-private-1" {
   vpc_id                  = aws_vpc.lmy-terraform-test.id
-  cidr_block              = "10.1.1.0/24"
+  cidr_block              = "10.0.2.0/24"
   map_public_ip_on_launch = "false"
   availability_zone       = "ap-southeast-1a"
 
