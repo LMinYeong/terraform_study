@@ -43,7 +43,7 @@ resource "aws_internet_gateway" "lmy-tf-gw" {
 }
 
 # (4) Route Tables
-resource "aws_route_table" "lmy-tf-public" {
+resource "aws_route_table" "lmy-tf-public-rt" {
   vpc_id = aws_vpc.lmy-terraform-test.id
 
   route {
@@ -57,7 +57,7 @@ resource "aws_route_table" "lmy-tf-public" {
 
 }
 
-resource "aws_route_table" "lmy-tf-private" {
+resource "aws_route_table" "lmy-tf-private-rt" {
   vpc_id = aws_vpc.lmy-terraform-test.id
 
   tags = {
@@ -65,13 +65,13 @@ resource "aws_route_table" "lmy-tf-private" {
   }
 }
 
-# (5) Route associations public
+# (5) Route associations 
 resource "aws_route_table_association" "lmy-tf-public-1-rta" {
   subnet_id      = aws_subnet.lmy-tf-public-1.id
-  route_table_id = aws_route_table.lmy-tf-public.id
+  route_table_id = aws_route_table.lmy-tf-public-rt.id
 }
 
 resource "aws_route_table_association" "lmy-tf-private-1-rta" {
   subnet_id      = aws_subnet.lmy-tf-private-1.id
-  route_table_id = aws_route_table.lmy-tf-private.id
+  route_table_id = aws_route_table.lmy-tf-private-rt.id
 }
