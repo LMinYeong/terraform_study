@@ -1,7 +1,7 @@
 data "aws_ami" "amzn2-linux-ami" {
   most_recent = true
   owners      = ["amazon"]
-  
+
   #[!]Region별 ami id 다름 → name으로 찾아서 사용?
   filter {
     name   = "name"
