@@ -72,6 +72,6 @@ resource "aws_route_table_association" "lmy-tf-public-1-rta" {
 }
 
 resource "aws_route_table_association" "lmy-tf-private-1-rta" {
-  subnet_id      = aws_subnet.lmy-tf-public-1.id
-  route_table_id = aws_route_table.lmy-tf-public.id
+  subnet_id      = aws_subnet.lmy-tf-private-1.id
+  route_table_id = aws_route_table.lmy-tf-private.id
 }
