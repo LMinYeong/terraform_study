@@ -9,24 +9,6 @@ resource "aws_instance" "example" {
         Service = var.test
     }
 
-    #connection {
-    #    type     = "ssh"
-    #    user     = "ec2-user"
-    #    password = var.root_password
-    #    host     = self.public_ip
-    #}
-
-    #provisioner "remote-exec" {
-    #    inline = [
-    #        "echo ${self.private_ip} >> private_ips.txt"
-    #    ]
-    #}
-    
-}
-
-resource "terraform_data" "ssh" {
-    triggers_replace = aws_instance.example.id
-
     connection {
         type     = "ssh"
         user     = "ec2-user"
@@ -35,6 +17,9 @@ resource "terraform_data" "ssh" {
     }
 
     provisioner "remote-exec" {
-        inline = [ "echo ${self.private_ip} >> private_ips.txt", ]
+        inline = [
+            "echo ${self.private_ip} >> private_ips.txt"
+        ]
     }
+    
 }
