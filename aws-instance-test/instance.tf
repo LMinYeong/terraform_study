@@ -9,7 +9,7 @@ resource "aws_instance" "example" {
         Service = var.test
     }
 
-    # security_groups = [ aws_security_group.from_singapore.id ]
-    security_groups = [ "sg-0dc02689764a5db4e" ]
+    security_groups = [ aws_security_group.from_singapore.name ]
+    # security_groups = [ "from_singapore" ]
 
 }
