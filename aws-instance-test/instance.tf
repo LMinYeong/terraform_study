@@ -26,8 +26,8 @@ resource "aws_instance" "example" {
     }
 
     provisioner "file" {
-      source = "./private_ips.txt"
+      source = "private_ips.txt"
       destination = "/home/ec2-user/private_ips.txt"
     }
-    
+
 }
