@@ -1,6 +1,6 @@
 data "aws_ip_ranges" "singapore_ec2" {
   regions = ["ap-southeast-1"]
-  services = "ec2"
+  services = ["ec2"]
 }
 
 resource "aws_security_group" "from_singapore" {
