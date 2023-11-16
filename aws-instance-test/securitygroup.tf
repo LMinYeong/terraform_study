@@ -12,8 +12,8 @@ resource "aws_security_group" "from_singapore" {
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  
   tags = {
-    
     CreateDate = data.aws_ip_ranges.singapore_ec2.create_date
     SyncToken = data.aws_ip_ranges.singapore_ec2.sync_token
   }
