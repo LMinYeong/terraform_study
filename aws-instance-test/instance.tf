@@ -35,8 +35,6 @@ resource "terraform_data" "ssh" {
     }
 
     provisioner "remote-exec" {
-        inline = [
-            "echo ${self.private_ip} >> private_ips.txt",
-        ]
+        inline = [ "echo ${self.private_ip} >> private_ips.txt", ]
     }
 }
