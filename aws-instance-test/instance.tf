@@ -23,16 +23,37 @@ resource "aws_instance" "example" {
     # the Public SSH key
 
     # iam role
-    iam_instance_profile   = aws_iam_instance_profile.lmy-profile.name
+    iam_instance_profile   = aws_iam_instance_profile.lmy-tf-role-profile.name
 
+}
+
+# iam profile
+resource "aws_iam_instance_profile" "lmy-tf-role-profile" {
+  name = "lmy-tf-role-profile"
+  role = aws_iam_role.lmy-tf-role.name
 }
 
 # iam role
-resource "aws_iam_instance_profile" "lmy-profile" {
-  name = "lmy-profile"
-  role = "LMY-Vault-Join"
+resource "aws_iam_role" "lmy-tf-role" {
+  name               = "lmy-tf-role"
+  path               = "/"
+  assume_role_policy = data.aws_iam_policy_document.lmy-tf-role.json
 }
 
+# iam policy
+data "aws_iam_policy_document" "lmy-tf-role" {
+  statement {
+    effect = "Allow"
+
+    actions = [
+        "ec2:*",
+        "autoscaling:*",
+        "iam:*"
+    ]
+
+    resources = [ "*" ]
+  }
+}
 
 # EBS Volume
 resource "aws_ebs_volume" "lmy-tf-ebs-volume-1" {
