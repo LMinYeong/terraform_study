@@ -24,7 +24,7 @@ resource "aws_instance" "example" {
 
     # iam role
     # iam_instance_profile = "LMY-Vault-Join"
-    iam_instance_profile = aws_iam_instance_profile.lmy-tf-role-profile.name
+    iam_instance_profile = aws_iam_instance_profile.lmy-vault-join-profile.name
     # iam_instance_profile = data.aws_iam_instance_profile.lmy-vault-join-profile.name
 }
 output "lmy-vault-join-profile" {
