@@ -30,12 +30,12 @@ variable "SUBNET_AZ_LIST" {
 
   default = [
     {
-      availability_zone = "${var.AWS_REGION}a"
+      availability_zone = "a"
       cidr_block        = "10.0.1.0/24"
       map_public_ip_on_launch = true
     },
     {
-      availability_zone = "${var.AWS_REGION}a"
+      availability_zone = "a"
       cidr_block        = "10.0.2.0/24"
       map_public_ip_on_launch = false 
     }
