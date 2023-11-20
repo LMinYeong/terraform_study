@@ -22,7 +22,11 @@ resource "aws_instance" "example" {
 
     # the Public SSH key
 
+    # iam role
+    iam_instance_profile   = "LMY-Vault-Join"
+
 }
+
 
 # EBS Volume
 resource "aws_ebs_volume" "lmy-tf-ebs-volume-1" {
