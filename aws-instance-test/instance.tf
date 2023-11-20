@@ -23,8 +23,14 @@ resource "aws_instance" "example" {
     # the Public SSH key
 
     # iam role
-    iam_instance_profile   = "LMY-Vault-Join"
+    iam_instance_profile   = aws_iam_instance_profile.lmy-profile.name
 
+}
+
+# iam role
+resource "aws_iam_instance_profile" "lmy-profile" {
+  name = "lmy-profile"
+  role = "LMY-Vault-Join"
 }
 
 
