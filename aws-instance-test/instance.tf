@@ -23,11 +23,16 @@ resource "aws_instance" "example" {
     # the Public SSH key
 
     # iam role
-    iam_instance_profile = data.aws_iam_instance_profile.lmy-vault-join-profile.name
+    # iam_instance_profile = "LMY-Vault-Join"
+    iam_instance_profile = aws_iam_instance_profile.lmy-tf-role-profile.name
+    # iam_instance_profile = data.aws_iam_instance_profile.lmy-vault-join-profile.name
+}
+output "lmy-vault-join-profile" {
+  value = data.aws_iam_instance_profile.lmy-vault-join-profile.name
 }
 
-# IAM Role - Instace Profile
-data "aws_iam_instance_profile" "lmy-vault-join-profile" {
+# 기존 생성되어 있는 IAM Role - Instace Profile 사용
+resource "aws_iam_instance_profile" "lmy-vault-join-profile" {
   name = "LMY-Vault-Join"
 }
 
