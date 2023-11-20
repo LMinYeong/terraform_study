@@ -27,9 +27,6 @@ resource "aws_instance" "example" {
     iam_instance_profile = aws_iam_instance_profile.lmy-vault-join-profile.name
     # iam_instance_profile = data.aws_iam_instance_profile.lmy-vault-join-profile.name
 }
-output "lmy-vault-join-profile" {
-  value = data.aws_iam_instance_profile.lmy-vault-join-profile.name
-}
 
 # 기존 생성되어 있는 IAM Role - Instace Profile 사용
 resource "aws_iam_instance_profile" "lmy-vault-join-profile" {
