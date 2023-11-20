@@ -14,7 +14,7 @@ resource "aws_subnet" "lmy-tf-public-1" {
   vpc_id                  = aws_vpc.lmy-terraform-test.id
   cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = "true"
-  availability_zone       = "ap-southeast-1a"
+  availability_zone       = "${var.AWS_REGION}a"
 
   tags = {
     Name = "lmy-tf-public-1"
@@ -25,12 +25,24 @@ resource "aws_subnet" "lmy-tf-private-1" {
   vpc_id                  = aws_vpc.lmy-terraform-test.id
   cidr_block              = "10.0.2.0/24"
   map_public_ip_on_launch = "false"
-  availability_zone       = "ap-southeast-1a"
+  availability_zone       = "${var.AWS_REGION}a"
 
   tags = {
     Name = "lmy-tf-private-1"
   }
 }
+
+# ex) 새 Variable type 정의 - 진수의 설명?
+resource "aws_subnet" "jinsu" {
+  count = length(var.SUBNET_AZ_LIST)
+  vpc_id = aws_vpc.lmy-terraform-test.id
+
+  cidr_block = var.SUBNET_AZ_LIST[count.index].cidr_block
+  map_public_ip_on_launch = var.SUBNET_AZ_LIST[count.index].map_public_ip_on_launch
+  availability_zone = var.SUBNET_AZ_LIST[count.index].availability_zone
+
+}
+# ex end
 
 # (3) Internet GW
 resource "aws_internet_gateway" "lmy-tf-gw" {

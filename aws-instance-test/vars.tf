@@ -19,3 +19,25 @@ variable "root_password" {
   type        = string
   description = "cloud에서 설정해씁니다."
 }
+
+# VPC Subnet - 새 Variable type 정의
+variable "SUBNET_AZ_LIST" {
+  type = list(object({
+    availability_zone = string
+    cidr_block        = string
+    map_public_ip_on_launch = bool
+  }))
+
+  default = [
+    {
+      availability_zone = "${var.AWS_REGION}a"
+      cidr_block        = "10.0.1.0/24"
+      map_public_ip_on_launch = true
+    },
+    {
+      availability_zone = "${var.AWS_REGION}a"
+      cidr_block        = "10.0.2.0/24"
+      map_public_ip_on_launch = false 
+    }
+  ]
+}
