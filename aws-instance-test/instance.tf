@@ -25,16 +25,16 @@ resource "aws_instance" "example" {
 }
 
 # EBS Volume
-#resource "aws_ebs_volume" "lmy-tf-ebs-volume-1" {
+resource "aws_ebs_volume" "lmy-tf-ebs-volume-1" {
   # ?
-#  availability_zone = "${var.AWS_REGION}a"
-#  size = 20
-#  type = "gp2"
+  availability_zone = "${var.AWS_REGION}a"
+  size = 20
+  type = "gp2"
 
-#  tags = {
-#    Name = "extra volume data"
-#  } 
-#}
+  tags = {
+    Name = "extra volume data"
+  } 
+}
 
 resource "aws_volume_attachment" "lmy-tf-ebs-volume-1-attachment" {
   device_name = "/dev/xvdh"

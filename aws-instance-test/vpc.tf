@@ -33,15 +33,14 @@ resource "aws_subnet" "lmy-tf-private-1" {
 }
 
 # ex) 새 Variable type 정의 - 진수의 설명?
-resource "aws_subnet" "jinsu" {
-  count = length(var.SUBNET_AZ_LIST)
-  vpc_id = aws_vpc.lmy-terraform-test.id
+#resource "aws_subnet" "jinsu" {
+#  count = length(var.SUBNET_AZ_LIST)
+#  vpc_id = aws_vpc.lmy-terraform-test.id
 
-  cidr_block = var.SUBNET_AZ_LIST[count.index].cidr_block
-  map_public_ip_on_launch = var.SUBNET_AZ_LIST[count.index].map_public_ip_on_launch
-  availability_zone = var.SUBNET_AZ_LIST[count.index].availability_zone
-
-}
+#  cidr_block = var.SUBNET_AZ_LIST[count.index].cidr_block
+#  map_public_ip_on_launch = var.SUBNET_AZ_LIST[count.index].map_public_ip_on_launch
+#  availability_zone = var.SUBNET_AZ_LIST[count.index].availability_zone
+#}
 # ex end
 
 # (3) Internet GW
