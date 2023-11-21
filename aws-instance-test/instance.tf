@@ -41,6 +41,10 @@ resource "aws_instance" "example" {
           private_key = tls_private_key.lmy-tf-private-key.private_key_openssh
           host = self.public_ip
         }
+
+        inline = [ 
+            "mkdir $HOME/test"
+         ]
     }
 
     # iam role
