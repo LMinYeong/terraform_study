@@ -11,6 +11,11 @@ resource "aws_key_pair" "lmy-tf-pem-key" {
   public_key = tls_private_key.lmy-tf-private-key.public_key_openssh
 }
 
+# 기존 생성되어 있는 IAM Role - Instace Profile 사용
+data "aws_iam_instance_profile" "lmy-vault-join-profile" {
+  name = "LMY-Vault-Join"
+}
+
 resource "aws_instance" "example" {
     #ami = lookup(var.AMIS, var.AWS_REGION, "")
     ami = data.aws_ami.amzn2-linux-ami.image_id
@@ -30,6 +35,11 @@ resource "aws_instance" "example" {
     # Custom VPC
     vpc_security_group_ids = [aws_security_group.lmy-tf-allow-ssh.id]
 
+    # iam role
+    # iam_instance_profile = "LMY-Vault-Join" => X 사용 불가.
+    # iam_instance_profile = aws_iam_instance_profile.lmy-tf-role-profile.name
+    iam_instance_profile = data.aws_iam_instance_profile.lmy-vault-join-profile.name
+
     # the Public SSH key
     key_name = aws_key_pair.lmy-tf-pem-key.key_name
     
@@ -46,22 +56,12 @@ resource "aws_instance" "example" {
             "mkdir $HOME/test"
          ]
     }
-
-    # iam role
-    # iam_instance_profile = "LMY-Vault-Join" => X 사용 불가.
-    # iam_instance_profile = aws_iam_instance_profile.lmy-tf-role-profile.name
-    iam_instance_profile = data.aws_iam_instance_profile.lmy-vault-join-profile.name
 }
 
 ### pem_key 출력 확인
 output "pem_key" {
   value = tls_private_key.lmy-tf-private-key.private_key_openssh
   sensitive = true
-}
-
-# 기존 생성되어 있는 IAM Role - Instace Profile 사용
-data "aws_iam_instance_profile" "lmy-vault-join-profile" {
-  name = "LMY-Vault-Join"
 }
 
 # EBS Volume

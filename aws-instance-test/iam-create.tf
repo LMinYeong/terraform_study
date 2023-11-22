@@ -1,4 +1,4 @@
-# (1) IAM Role 생성
+# IAM Role - Trust relationship 작성
 data "aws_iam_policy_document" "lmy-tf-trust-relationship-doc" {
   statement {
     effect = "Allow"
@@ -12,6 +12,7 @@ data "aws_iam_policy_document" "lmy-tf-trust-relationship-doc" {
   }
 }
 
+# (1) IAM Role 생성
 resource "aws_iam_role" "lmy-tf-role" {
   name               = "test-role"
   assume_role_policy = data.aws_iam_policy_document.lmy-tf-trust-relationship-doc.json
@@ -23,22 +24,45 @@ resource "aws_iam_instance_profile" "lmy-tf-role-profile" {
   role = aws_iam_role.lmy-tf-role.name
 }
 
-# (3) IAM Policy 생성 
-data "aws_iam_policy_document" "lmy-tf-policy-doc" {
+# (3-1) IAM Policy 생성 
+data "aws_iam_policy_document" "lmy-tf-ec2-policy-doc" {
   statement {
     effect    = "Allow"
     actions   = ["ec2:Describe*"]
     resources = ["*"]
   }
 }
-
 resource "aws_iam_policy" "lmy-tf-policy" {
   name        = "lmy-tf-policy"
   description = "A terraform test policy"
-  policy      = data.aws_iam_policy_document.lmy-tf-policy-doc.json
+  policy      = data.aws_iam_policy_document.lmy-tf-ec2-policy-doc.json
 }
 
-# (4) IAM Role에 IAM Policy 할당
+# (3-2) Role Policy(s3) 생성 - IAM Role을 지정하는 방법
+resource "aws_iam_role_policy" "lmy-tf-s3-policy" {
+  name = "lmy-tf-s3-role"
+  role = aws_iam_role.lmy-tf-role.id
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+              "s3:*"
+            ],
+            "Resource": [
+              "arn:aws:s3:::lmy-tf-bucket",
+              "arn:aws:s3:::lmy-tf-bucket/*"
+            ]
+        }
+    ]
+}
+EOF
+
+}
+
+# (4) IAM Role에 IAM Policy 할당하는 방법
 resource "aws_iam_role_policy_attachment" "lmy-tf-policy-attach" {
   role       = aws_iam_role.lmy-tf-role.name
   policy_arn = aws_iam_policy.lmy-tf-policy.arn
