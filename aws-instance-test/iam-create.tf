@@ -14,7 +14,7 @@ data "aws_iam_policy_document" "lmy-tf-trust-relationship-doc" {
 
 # (1) IAM Role 생성
 resource "aws_iam_role" "lmy-tf-role" {
-  name               = "test-role"
+  name               = "lmy-tf-role"
   assume_role_policy = data.aws_iam_policy_document.lmy-tf-trust-relationship-doc.json
 }
 
