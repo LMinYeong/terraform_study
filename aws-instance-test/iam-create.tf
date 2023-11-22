@@ -24,7 +24,7 @@ resource "aws_iam_instance_profile" "lmy-tf-role-profile" {
   role = aws_iam_role.lmy-tf-role.name
 }
 
-# (3-1) IAM Policy 생성 
+# (3) IAM Policy 생성 - IAM Role에 IAM Policy 할당하는 방법
 data "aws_iam_policy_document" "lmy-tf-ec2-policy-doc" {
   statement {
     effect    = "Allow"
@@ -38,9 +38,14 @@ resource "aws_iam_policy" "lmy-tf-policy" {
   policy      = data.aws_iam_policy_document.lmy-tf-ec2-policy-doc.json
 }
 
-# (3-2) Role Policy(s3) 생성 - IAM Role을 지정하는 방법
+resource "aws_iam_role_policy_attachment" "lmy-tf-policy-attach" {
+  role       = aws_iam_role.lmy-tf-role.name
+  policy_arn = aws_iam_policy.lmy-tf-policy.arn
+}
+
+# (4) Role Policy(s3) 생성 - IAM Role을 지정하는 방법
 resource "aws_iam_role_policy" "lmy-tf-s3-policy" {
-  name = "lmy-tf-s3-role"
+  name = "lmy-tf-s3-policy"
   role = aws_iam_role.lmy-tf-role.id
   policy = <<EOF
 {
@@ -60,10 +65,4 @@ resource "aws_iam_role_policy" "lmy-tf-s3-policy" {
 }
 EOF
 
-}
-
-# (4) IAM Role에 IAM Policy 할당하는 방법
-resource "aws_iam_role_policy_attachment" "lmy-tf-policy-attach" {
-  role       = aws_iam_role.lmy-tf-role.name
-  policy_arn = aws_iam_policy.lmy-tf-policy.arn
 }
